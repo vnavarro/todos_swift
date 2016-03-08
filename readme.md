@@ -3,7 +3,7 @@
 This is a basic todos app made to learn Apple's Swift language.
 
 Check the serie of posts at vnavarro.com
-[[A programmer's journey] Todo App with Swift - 01]()
+[[A programmer's journey] Todo App with Swift - 01](http://vnavarro.com.br/swift/tutorial/2016/03/07/swift-todos-01.html)
 
 ## Changelog
 
