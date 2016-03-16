@@ -8,16 +8,16 @@
 
 import Foundation
 
-class TodoModel {
-    var content: String
-    var completed: Bool
+public class TodoModel {
+    public var content: String
+    public var completed: Bool
     
-    init (content: String) {
+    public init (content: String) {
         self.content = content
         self.completed = false
     }
     
-    static func sample() -> [TodoModel] {
+    public static func sample() -> [TodoModel] {
         var data = [TodoModel]()
         data.append(TodoModel(content:"Pay the bills"))
         data.append(TodoModel(content:"Fix bike"))
