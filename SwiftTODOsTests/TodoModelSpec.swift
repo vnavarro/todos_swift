@@ -43,6 +43,19 @@ class TodoModelSpec : QuickSpec {
                     let storedTodo = TodoModel.loadLocally(NSUUID())
                     expect(storedTodo).to(beNil())
                 }
+                
+                it("deletes from user defaults") {
+                    todo.saveLocally()
+                    todo.deleteLocally()
+                    expect(TodoModel.loadLocally(todo.getUUID())).to(beNil())
+                }
+                
+                it("deletes nothing safely") {
+                    let notSavedTodo = TodoModel(content:"Not in userdefaults")
+                    expect(TodoModel.loadLocally(notSavedTodo.getUUID())).to(beNil())
+                    notSavedTodo.deleteLocally()
+                    expect(TodoModel.loadLocally(notSavedTodo.getUUID())).to(beNil())
+                }
             }
         }
     }

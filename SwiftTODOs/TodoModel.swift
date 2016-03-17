@@ -53,6 +53,11 @@ public class TodoModel: NSObject, NSCoding {
         return nil
     }
     
+    public func deleteLocally() {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults.removeObjectForKey(self.uuid.UUIDString)
+    }
+    
     //MARK: Sample Generation
     
     public static func sample() -> [TodoModel] {
