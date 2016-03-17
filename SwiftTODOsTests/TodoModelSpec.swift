@@ -20,11 +20,28 @@ class TodoModelSpec : QuickSpec {
             
             context("after init") {
                 it("set item with given content") {
-                    expect(todo.content.isEmpty).toNot(beTrue())
+                    expect(todo.content).toNot(beEmpty())
                 }
                 
                 it("set item with completed false by default") {
                     expect(todo.completed).toNot(beTrue())
+                }
+                
+                it("set uuid") {
+                    expect(todo.getUUID().UUIDString).toNot(beEmpty())
+                }
+            }
+            
+            context("using local storage") {
+                it("save/load to/from user defaults") {
+                    todo.saveLocally()
+                    let storedTodo = TodoModel.loadLocally(todo.getUUID())
+                    expect(storedTodo!.getUUID().UUIDString).to(equal(todo.getUUID().UUIDString))
+                }
+                
+                it("retrieves no object safely") {
+                    let storedTodo = TodoModel.loadLocally(NSUUID())
+                    expect(storedTodo).to(beNil())
                 }
             }
         }
