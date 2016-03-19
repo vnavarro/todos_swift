@@ -13,6 +13,12 @@ public class TodosModel {
 
     public init() {}
     
+    public func filter(completedFilter: Bool?) -> [TodoModel] {
+        return list.filter { (TodoModel) -> Bool in
+            return completedFilter == nil || TodoModel.completed == completedFilter
+        }
+    }
+    
     public func saveLocally(key: String) {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let encodedData = NSKeyedArchiver.archivedDataWithRootObject(list)

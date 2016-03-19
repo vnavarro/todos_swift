@@ -10,22 +10,32 @@ import UIKit
 
 class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
 
+    private let TODOS_LOCAL_STORAGE: String = "br.com.vnavarro.todos"
+    
     //MARK: Properties
     
     @IBOutlet weak var txtFieldTodo: UITextField!    
     @IBOutlet weak var tblViewTodos: UITableView!
     @IBOutlet weak var toolbar: UIToolbar!
     
-    var todosData: [TodoModel] = [];
-    var allTodos: [TodoModel] = [];
+    var todosData: TodosModel = TodosModel()
+    var allTodos: TodosModel = TodosModel()
     
     var completedFilter: Bool? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         txtFieldTodo.delegate = self
-        todosData = TodoModel.sample()
-        allTodos = todosData
+        if let storedTodos = TodosModel.loadLocally(TODOS_LOCAL_STORAGE) {
+            if(storedTodos.count > 0) {
+                todosData.list = storedTodos
+            }
+        }
+        else {
+            todosData.list = TodoModel.sample()
+        }
+
+        allTodos.list = todosData.list
     }
 
     // MARK: UITextFieldDelegate
@@ -37,18 +47,20 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     func textFieldDidEndEditing(textField: UITextField) {
         if let newItem = textField.text {
             let newTodo = TodoModel(content: newItem)
-            todosData.append(newTodo)
-            allTodos.append(newTodo)
+            todosData.list.append(newTodo)
+            allTodos.list.append(newTodo)
         }
         tblViewTodos.reloadData()
         textField.text = ""
+        
+        todosData.saveLocally(TODOS_LOCAL_STORAGE)
     }
 
     //Mark: UITableViewDelegate/DataSource
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! TodoTableViewCell
         
-        let todo = todosData[indexPath.row]
+        let todo = todosData.list[indexPath.row]
         cell.titleLabel.text = todo.content
         cell.switchCheckbox(todo.completed)
         
@@ -56,7 +68,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todosData.count
+        return todosData.list.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -66,19 +78,21 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
-            let todo = todosData[indexPath.row]
+            let todo = todosData.list[indexPath.row]
             var removeIndex = -1
-            for i in 0..<allTodos.count {
-                if allTodos[i].content == todo.content {
+            for i in 0..<allTodos.list.count {
+                if allTodos.list[i].content == todo.content {
                     removeIndex = i
                     break
                 }
             }
             if removeIndex != -1 {
-                allTodos.removeAtIndex(removeIndex)
+                allTodos.list.removeAtIndex(removeIndex)
             }
-            todosData.removeAtIndex(indexPath.row)
+            todosData.list.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            
+            todosData.saveLocally(TODOS_LOCAL_STORAGE)
         }
     }
     
@@ -87,10 +101,12 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let todo = todosData[indexPath.row]
+        let todo = todosData.list[indexPath.row]
         todo.completed = !todo.completed
         filterTodos()
         tblViewTodos.reloadData()
+        
+        todosData.saveLocally(TODOS_LOCAL_STORAGE)
     }
     
     //Mark: UIToolbarDelegate
@@ -124,9 +140,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     
     //Mark: Filter todos
     func filterTodos() {
-        todosData = allTodos.filter { (TodoModel) -> Bool in
-            return completedFilter == nil || TodoModel.completed == completedFilter
-        }
+        todosData.list = allTodos.filter(completedFilter);
     }
 }
 
