@@ -32,7 +32,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
             }
         }
         else {
-            todosData.list = TodoModel.sample()
+            todosData.list = TodosModel.sample()
         }
 
         allTodos.list = todosData.list

@@ -57,18 +57,4 @@ public class TodoModel: NSObject, NSCoding {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         userDefaults.removeObjectForKey(self.uuid.UUIDString)
     }
-    
-    //MARK: Sample Generation
-    
-    public static func sample() -> [TodoModel] {
-        var data = [TodoModel]()
-        data.append(TodoModel(content:"Pay the bills"))
-        data.append(TodoModel(content:"Fix bike"))
-        data.append(TodoModel(content:"Schedule Medic"))
-        data.append(TodoModel(content:"Get more dog food"))
-        data.append(TodoModel(content:"Call jenny to schedule dinner"))
-        data.append(TodoModel(content:"Invite Bob to play basket"))
-        data.append(TodoModel(content:"Buy ticket to see this week Golden State game"))
-        return data
-    }
 }
