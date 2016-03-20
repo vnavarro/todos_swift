@@ -18,6 +18,8 @@ class TodosModelSpec : QuickSpec {
             beforeEach() {
                 todos = TodosModel()
                 todos.list.append(TodoModel(content:"Sample content"))
+                todos.list.append(TodoModel(content:"Sample content"))
+                todos.list.append(TodoModel(content:"Sample content"))
             }
             
             context("using local storage") {
@@ -41,10 +43,29 @@ class TodosModelSpec : QuickSpec {
                 }
                 
                 it("deletes nothing safely") {
-                    let notSavedTodos = TodoModel(content:"Not in userdefaults")
                     expect(TodosModel.loadLocally(todosSaveKey)).to(beNil())
                     TodosModel.deleteLocally(todosSaveKey)
                     expect(TodosModel.loadLocally(todosSaveKey)).to(beNil())
+                }
+            }
+            
+            context("filtering todos") {
+                beforeEach() {
+                    todos.list.first?.completed = true;
+                }
+                
+                it("show only yet to be done") {
+                    let notCompleted = false
+                    expect(todos.filter(notCompleted).count == 2).to(beTrue())
+                }
+                
+                it("show only completed") {
+                    let completed = true
+                    expect(todos.filter(completed).count == 1).to(beTrue())
+                }
+                
+                it("show all") {
+                    expect(todos.filter(nil).count == 3).to(beTrue())
                 }
             }
         }
