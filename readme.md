@@ -4,8 +4,14 @@ This is a basic todos app made to learn Apple's Swift language.
 
 Check the serie of posts at vnavarro.com
 [[A programmer's journey] Todo App with Swift - 01](http://vnavarro.com.br/swift/tutorial/2016/03/07/swift-todos-01.html)
+[[A programmer's journey] Todo App with Swift - 02](http://vnavarro.com.br/swift/tutorial/2016/03/18/swift-todos-02.html)
 
 ## Changelog
+
+### v0.0.2
+
+* todos are persisted between sessions
+* unit tests added with Quick
 
 ### v0.0.1
 
