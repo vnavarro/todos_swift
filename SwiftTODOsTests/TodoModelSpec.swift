@@ -28,7 +28,7 @@ class TodoModelSpec : QuickSpec {
                 }
                 
                 it("set uuid") {
-                    expect(todo.getUUID().UUIDString).toNot(beEmpty())
+                    expect(todo.getUUID().uuidString).toNot(beEmpty())
                 }
             }
             
@@ -36,11 +36,11 @@ class TodoModelSpec : QuickSpec {
                 it("save/load to/from user defaults") {
                     todo.saveLocally()
                     let storedTodo = TodoModel.loadLocally(todo.getUUID())
-                    expect(storedTodo!.getUUID().UUIDString).to(equal(todo.getUUID().UUIDString))
+                    expect(storedTodo!.getUUID().uuidString).to(equal(todo.getUUID().uuidString))
                 }
                 
                 it("retrieves no object safely") {
-                    let storedTodo = TodoModel.loadLocally(NSUUID())
+                    let storedTodo = TodoModel.loadLocally(UUID())
                     expect(storedTodo).to(beNil())
                 }
                 

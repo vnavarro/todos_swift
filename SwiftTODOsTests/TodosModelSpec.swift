@@ -24,10 +24,10 @@ class TodosModelSpec : QuickSpec {
             
             context("using local storage") {
                 it("save/load to/from user defaults") {
-                    let expectedUUID = (todos.list.first?.getUUID().UUIDString)!
+                    let expectedUUID = (todos.list.first?.getUUID().uuidString)!
                     todos.saveLocally(todosSaveKey)
                     let storedTodos = TodosModel.loadLocally(todosSaveKey)
-                    let storedUUID = storedTodos?.first?.getUUID().UUIDString
+                    let storedUUID = storedTodos?.first?.getUUID().uuidString
                     expect(storedUUID).to(equal(expectedUUID))
                 }
                 
