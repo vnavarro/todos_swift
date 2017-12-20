@@ -10,7 +10,7 @@ import UIKit
 
 class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    private let TODOS_LOCAL_STORAGE: String = "br.com.vnavarro.todos"
+    fileprivate let TODOS_LOCAL_STORAGE: String = "br.com.vnavarro.todos"
     
     //MARK: Properties
     
@@ -39,12 +39,12 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     }
 
     // MARK: UITextFieldDelegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if let newItem = textField.text {
             let newTodo = TodoModel(content: newItem)
             todosData.list.append(newTodo)
@@ -57,8 +57,8 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     }
 
     //Mark: UITableViewDelegate/DataSource
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! TodoTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as! TodoTableViewCell
         
         let todo = todosData.list[indexPath.row]
         cell.titleLabel.text = todo.content
@@ -67,16 +67,16 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         return cell
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todosData.list.count
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             // Delete the row from the data source
             let todo = todosData.list[indexPath.row]
             var removeIndex = -1
@@ -87,20 +87,20 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
                 }
             }
             if removeIndex != -1 {
-                allTodos.list.removeAtIndex(removeIndex)
+                allTodos.list.remove(at: removeIndex)
             }
-            todosData.list.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            todosData.list.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
             
             todosData.saveLocally(TODOS_LOCAL_STORAGE)
         }
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let todo = todosData.list[indexPath.row]
         todo.completed = !todo.completed
         filterTodos()
@@ -110,30 +110,30 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     }
     
     //Mark: UIToolbarDelegate
-    func selectToolbarItem(completedFilter: Bool?) {
+    func selectToolbarItem(_ completedFilter: Bool?) {
         self.completedFilter = completedFilter
         filterTodos()
         tblViewTodos.reloadData()
     }
     
-    func swapTabItemsColors(selectedItem: UIBarButtonItem) {
+    func swapTabItemsColors(_ selectedItem: UIBarButtonItem) {
         self.toolbar.items!.forEach({ (item: UIBarButtonItem) -> () in
             item.tintColor = UIColor(red: 216/255.0, green: 222/255.0, blue: 227/255.0, alpha: 1)
         })
         selectedItem.tintColor = UIColor(red: 127/255.0, green: 219/255.0, blue: 118/255.0, alpha: 1)
     }
     
-    @IBAction func selectedToDos(sender: UIBarButtonItem) {
+    @IBAction func selectedToDos(_ sender: UIBarButtonItem) {
         swapTabItemsColors(sender)
         selectToolbarItem(false)
     }
     
-    @IBAction func selectedAll(sender: UIBarButtonItem) {
+    @IBAction func selectedAll(_ sender: UIBarButtonItem) {
         swapTabItemsColors(sender)
         selectToolbarItem(nil)
     }
     
-    @IBAction func selectedCompleted(sender: UIBarButtonItem) {
+    @IBAction func selectedCompleted(_ sender: UIBarButtonItem) {
         swapTabItemsColors(sender)
         selectToolbarItem(true)
     }

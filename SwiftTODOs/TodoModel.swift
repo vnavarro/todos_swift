@@ -8,53 +8,53 @@
 
 import Foundation
 
-public class TodoModel: NSObject, NSCoding {
-    private var uuid: NSUUID
-    public  var content: String
-    public  var completed: Bool
+open class TodoModel: NSObject, NSCoding {
+    fileprivate var uuid: UUID
+    open  var content: String
+    open  var completed: Bool
     
-    public func getUUID() -> NSUUID {
+    open func getUUID() -> UUID {
         return self.uuid;
     }
     
     public init (content: String) {
-        self.uuid = NSUUID()
+        self.uuid = UUID()
         self.content = content
         self.completed = false
     }
     
     //MARK: NSCoding
     
-    public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(uuid, forKey: "uuid")
-        aCoder.encodeObject(content, forKey: "content")
-        aCoder.encodeBool(completed, forKey: "completed")
+    open func encode(with aCoder: NSCoder) {
+        aCoder.encode(uuid, forKey: "uuid")
+        aCoder.encode(content, forKey: "content")
+        aCoder.encode(completed, forKey: "completed")
     }
     
     public required init(coder aDecoder: NSCoder) {
-        uuid = aDecoder.decodeObjectForKey("uuid") as! NSUUID
-        content = aDecoder.decodeObjectForKey("content") as! String
-        completed = aDecoder.decodeBoolForKey("completed")
+        uuid = aDecoder.decodeObject(forKey: "uuid") as! UUID
+        content = aDecoder.decodeObject(forKey: "content") as! String
+        completed = aDecoder.decodeBool(forKey: "completed")
     }
     
     //MARK: Local Storage
     
-    public func saveLocally() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let encodedData = NSKeyedArchiver.archivedDataWithRootObject(self);
-        userDefaults.setObject(encodedData, forKey: self.uuid.UUIDString)
+    open func saveLocally() {
+        let userDefaults = UserDefaults.standard
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: self);
+        userDefaults.set(encodedData, forKey: self.uuid.uuidString)
     }
     
-    public static func loadLocally(uuid: NSUUID) -> TodoModel? {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        if let todoData = userDefaults.objectForKey(uuid.UUIDString) {
-            return NSKeyedUnarchiver.unarchiveObjectWithData(todoData as! NSData) as? TodoModel
+    open static func loadLocally(_ uuid: UUID) -> TodoModel? {
+        let userDefaults = UserDefaults.standard
+        if let todoData = userDefaults.object(forKey: uuid.uuidString) {
+            return NSKeyedUnarchiver.unarchiveObject(with: todoData as! Data) as? TodoModel
         }
         return nil
     }
     
-    public func deleteLocally() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.removeObjectForKey(self.uuid.UUIDString)
+    open func deleteLocally() {
+        let userDefaults = UserDefaults.standard
+        userDefaults.removeObject(forKey: self.uuid.uuidString)
     }
 }

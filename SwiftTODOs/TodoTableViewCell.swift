@@ -13,7 +13,7 @@ class TodoTableViewCell: UITableViewCell {
     @IBOutlet weak var checkboxImg: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    func switchCheckbox(checked: Bool) {
+    func switchCheckbox(_ checked: Bool) {
         if checked {
             checkboxImg.image = UIImage(named: "checked")
         }

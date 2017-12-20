@@ -8,39 +8,39 @@
 
 import Foundation
 
-public class TodosModel {
-    public  var list: [TodoModel] = []
+open class TodosModel {
+    open  var list: [TodoModel] = []
 
     public init() {}
     
-    public func filter(completedFilter: Bool?) -> [TodoModel] {
+    open func filter(_ completedFilter: Bool?) -> [TodoModel] {
         return list.filter { (TodoModel) -> Bool in
             return completedFilter == nil || TodoModel.completed == completedFilter
         }
     }
     
-    public func saveLocally(key: String) {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let encodedData = NSKeyedArchiver.archivedDataWithRootObject(list)
-        userDefaults.setObject(encodedData, forKey: key)
+    open func saveLocally(_ key: String) {
+        let userDefaults = UserDefaults.standard
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: list)
+        userDefaults.set(encodedData, forKey: key)
     }
 
-    public static func loadLocally(key: String) -> [TodoModel]? {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        if let todoData = userDefaults.objectForKey(key) {
-            return NSKeyedUnarchiver.unarchiveObjectWithData(todoData as! NSData) as? [TodoModel]
+    open static func loadLocally(_ key: String) -> [TodoModel]? {
+        let userDefaults = UserDefaults.standard
+        if let todoData = userDefaults.object(forKey: key) {
+            return NSKeyedUnarchiver.unarchiveObject(with: todoData as! Data) as? [TodoModel]
         }
         return nil
     }
 
-    public static func deleteLocally(key: String) {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.removeObjectForKey(key)
+    open static func deleteLocally(_ key: String) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.removeObject(forKey: key)
     }
     
     //MARK: Sample Generation
     
-    public static func sample() -> [TodoModel] {
+    open static func sample() -> [TodoModel] {
         var data = [TodoModel]()
         data.append(TodoModel(content:"Pay the bills"))
         data.append(TodoModel(content:"Fix bike"))
