@@ -23,10 +23,12 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     
     var completedFilter: Bool? = nil
     
+    var todoRepository = TodoLocalRepository()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         txtFieldTodo.delegate = self
-        if let storedTodos = TodosModel.loadLocally(TODOS_LOCAL_STORAGE) {
+        if let storedTodos = todoRepository.loadTodos(TODOS_LOCAL_STORAGE) {
             if(storedTodos.count > 0) {
                 todosData.list = storedTodos
             }
@@ -62,7 +64,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         tblViewTodos.reloadData()
         textField.text = ""
         
-        todosData.saveLocally(TODOS_LOCAL_STORAGE)
+        todoRepository.saveTodos(todosData, key: TODOS_LOCAL_STORAGE)
     }
 
     //Mark: UITableViewDelegate/DataSource
@@ -101,7 +103,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
             todosData.list.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             
-            todosData.saveLocally(TODOS_LOCAL_STORAGE)
+            todoRepository.saveTodos(todosData, key: TODOS_LOCAL_STORAGE)
         }
     }
     
@@ -115,7 +117,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         filterTodos()
         tblViewTodos.reloadData()
         
-        todosData.saveLocally(TODOS_LOCAL_STORAGE)
+        todoRepository.saveTodos(todosData, key: TODOS_LOCAL_STORAGE)
     }
     
     //Mark: UIToolbarDelegate

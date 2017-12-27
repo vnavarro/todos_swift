@@ -19,25 +19,6 @@ open class TodosModel {
         }
     }
     
-    open func saveLocally(_ key: String) {
-        let userDefaults = UserDefaults.standard
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: list)
-        userDefaults.set(encodedData, forKey: key)
-    }
-
-    open static func loadLocally(_ key: String) -> [TodoModel]? {
-        let userDefaults = UserDefaults.standard
-        if let todoData = userDefaults.object(forKey: key) {
-            return NSKeyedUnarchiver.unarchiveObject(with: todoData as! Data) as? [TodoModel]
-        }
-        return nil
-    }
-
-    open static func deleteLocally(_ key: String) {
-        let userDefaults = UserDefaults.standard
-        userDefaults.removeObject(forKey: key)
-    }
-    
     //MARK: Sample Generation
     
     open static func sample() -> [TodoModel] {
