@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2850FFFA1FF422E0002945CC /* UITextField_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2850FFF91FF422E0002945CC /* UITextField_Extensions.swift */; };
+		28D385381FEAC95600D166F9 /* UIAlertAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D385371FEAC95600D166F9 /* UIAlertAction+Extensions.swift */; };
 		35332A0B8A1E0491DB375C20 /* Pods_SwiftTODOsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BA508C45ADC0115F4D9999E /* Pods_SwiftTODOsTests.framework */; };
 		9D5940A61C9A20B500A86B2C /* TodoModelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5940A51C9A20B500A86B2C /* TodoModelSpec.swift */; };
 		9D5940AD1C9A424D00A86B2C /* TodosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5940AC1C9A424D00A86B2C /* TodosModel.swift */; };
@@ -32,6 +34,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2850FFF91FF422E0002945CC /* UITextField_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField_Extensions.swift; sourceTree = "<group>"; };
+		28D385371FEAC95600D166F9 /* UIAlertAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Extensions.swift"; sourceTree = "<group>"; };
 		3BA508C45ADC0115F4D9999E /* Pods_SwiftTODOsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftTODOsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D5940A51C9A20B500A86B2C /* TodoModelSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoModelSpec.swift; sourceTree = "<group>"; };
 		9D5940AC1C9A424D00A86B2C /* TodosModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodosModel.swift; sourceTree = "<group>"; };
@@ -71,6 +75,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28D385361FEAC90A00D166F9 /* ui_helpers */ = {
+			isa = PBXGroup;
+			children = (
+				28D385371FEAC95600D166F9 /* UIAlertAction+Extensions.swift */,
+				2850FFF91FF422E0002945CC /* UITextField_Extensions.swift */,
+			);
+			path = ui_helpers;
+			sourceTree = "<group>";
+		};
 		5131478F6575B171630AA3E0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +116,7 @@
 		9D917ED51C8B7BA5007D97F1 /* SwiftTODOs */ = {
 			isa = PBXGroup;
 			children = (
+				28D385361FEAC90A00D166F9 /* ui_helpers */,
 				9D917ED61C8B7BA5007D97F1 /* AppDelegate.swift */,
 				9D917ED81C8B7BA5007D97F1 /* TodosViewController.swift */,
 				9D917EDC1C8B7BA5007D97F1 /* Main.storyboard */,
@@ -291,6 +305,8 @@
 			files = (
 				9D5940AD1C9A424D00A86B2C /* TodosModel.swift in Sources */,
 				9D917ED71C8B7BA5007D97F1 /* AppDelegate.swift in Sources */,
+				2850FFFA1FF422E0002945CC /* UITextField_Extensions.swift in Sources */,
+				28D385381FEAC95600D166F9 /* UIAlertAction+Extensions.swift in Sources */,
 				9D917EFD1C8CF567007D97F1 /* TodoModel.swift in Sources */,
 				9D917EFB1C8CAA86007D97F1 /* TodoTableViewCell.swift in Sources */,
 				9D917ED91C8B7BA5007D97F1 /* TodosViewController.swift in Sources */,

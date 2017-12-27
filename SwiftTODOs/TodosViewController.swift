@@ -39,12 +39,21 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     }
 
     // MARK: UITextFieldDelegate
+    func showEmptyNotAllowed() {
+        UIAlertAction.presentInfoAlert(viewController: self, actionTitle: "Ok", message:"Empty values are not allowed")
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        if txtFieldTodo.isEmpty() {
+            showEmptyNotAllowed()
+            return
+        }
+        
         if let newItem = textField.text {
             let newTodo = TodoModel(content: newItem)
             todosData.list.append(newTodo)
