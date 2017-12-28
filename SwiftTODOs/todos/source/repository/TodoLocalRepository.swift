@@ -10,7 +10,21 @@ import UIKit
 
 open class TodoLocalRepository: TodoRepository {
     
+    fileprivate let storageKey: String = "br.com.vnavarro.todos"
+    
     public init() {}
+    
+    public func saveTodos(_ todos: TodosModel) {
+        saveTodos(todos, key: storageKey)
+    }
+    
+    public func loadTodos() -> [TodoModel]? {
+        return loadTodos(storageKey)
+    }
+    
+    public func deleteTodos() {
+        deleteTodos(storageKey)
+    }
     
     open func saveTodos(_ todos: TodosModel, key: String) {
         let userDefaults = UserDefaults.standard

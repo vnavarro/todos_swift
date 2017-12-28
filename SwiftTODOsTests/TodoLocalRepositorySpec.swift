@@ -29,7 +29,35 @@ class TodoLocalRepositorySpec: QuickSpec {
                 todo = TodoModel(content:"Sample content")
             }
             
-            context("todos storage interactions") {
+            context("todos storage interactions with default key") {
+                it("save/load to/from user defaults") {
+                    let expectedUUID = (todos.list.first?.getUUID().uuidString)!
+                    repository.saveTodos(todos)
+                    let storedTodos = repository.loadTodos()
+                    let storedUUID = storedTodos?.first?.getUUID().uuidString
+                    expect(storedUUID).to(equal(expectedUUID))
+                }
+                
+                it("retrieves no object safely") {
+                    repository.deleteTodos()
+                    let storedTodos = repository.loadTodos()
+                    expect(storedTodos).to(beNil())
+                }
+                
+                it("deletes from user defaults") {
+                    repository.saveTodos(todos)
+                    repository.deleteTodos()
+                    expect(repository.loadTodos()).to(beNil())
+                }
+                
+                it("deletes nothing safely") {
+                    expect(repository.loadTodos()).to(beNil())
+                    repository.deleteTodos()
+                    expect(repository.loadTodos()).to(beNil())
+                }
+            }
+            
+            context("todos storage interactions with custom key") {
                 it("save/load to/from user defaults") {
                     let expectedUUID = (todos.list.first?.getUUID().uuidString)!
                     repository.saveTodos(todos, key: todosSaveKey)

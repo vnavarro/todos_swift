@@ -9,9 +9,7 @@
 import UIKit
 
 class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
-
-    fileprivate let TODOS_LOCAL_STORAGE: String = "br.com.vnavarro.todos"
-    
+ 
     //MARK: Properties
     
     @IBOutlet weak var txtFieldTodo: UITextField!    
@@ -28,7 +26,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         txtFieldTodo.delegate = self
-        if let storedTodos = todoRepository.loadTodos(TODOS_LOCAL_STORAGE) {
+        if let storedTodos = todoRepository.loadTodos() {
             if(storedTodos.count > 0) {
                 todosData.list = storedTodos
             }
@@ -64,7 +62,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         tblViewTodos.reloadData()
         textField.text = ""
         
-        todoRepository.saveTodos(todosData, key: TODOS_LOCAL_STORAGE)
+        todoRepository.saveTodos(todosData)
     }
 
     //Mark: UITableViewDelegate/DataSource
@@ -103,7 +101,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
             todosData.list.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             
-            todoRepository.saveTodos(todosData, key: TODOS_LOCAL_STORAGE)
+            todoRepository.saveTodos(todosData)
         }
     }
     
@@ -117,7 +115,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         filterTodos()
         tblViewTodos.reloadData()
         
-        todoRepository.saveTodos(todosData, key: TODOS_LOCAL_STORAGE)
+        todoRepository.saveTodos(todosData)
     }
     
     //Mark: UIToolbarDelegate

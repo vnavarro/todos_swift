@@ -10,9 +10,9 @@ import Foundation
 
 public protocol TodoRepository {
 
-    func saveTodos(_ todos: TodosModel, key: String)
-    func loadTodos(_ key: String) -> [TodoModel]?
-    func deleteTodos(_ key: String)
+    func saveTodos(_ todos: TodosModel)
+    func loadTodos() -> [TodoModel]?
+    func deleteTodos()
     
 }
 
