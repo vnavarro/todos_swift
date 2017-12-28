@@ -31,4 +31,23 @@ open class TodoLocalRepository {
         userDefaults.removeObject(forKey: key)
     }
     
+    open func saveTodo(_ todo: TodoModel) {
+        let userDefaults = UserDefaults.standard
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: todo);
+        userDefaults.set(encodedData, forKey: todo.getUUID().uuidString)
+    }
+    
+    open func loadTodo(_ uuid: UUID) -> TodoModel? {
+        let userDefaults = UserDefaults.standard
+        if let todoData = userDefaults.object(forKey: uuid.uuidString) {
+            return NSKeyedUnarchiver.unarchiveObject(with: todoData as! Data) as? TodoModel
+        }
+        return nil
+    }
+    
+    open func deleteTodo(_ todo: TodoModel) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.removeObject(forKey: todo.getUUID().uuidString)
+    }
+    
 }

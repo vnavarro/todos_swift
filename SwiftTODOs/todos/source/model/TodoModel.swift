@@ -36,25 +36,5 @@ open class TodoModel: NSObject, NSCoding {
         content = aDecoder.decodeObject(forKey: "content") as! String
         completed = aDecoder.decodeBool(forKey: "completed")
     }
-    
-    //MARK: Local Storage
-    
-    open func saveLocally() {
-        let userDefaults = UserDefaults.standard
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: self);
-        userDefaults.set(encodedData, forKey: self.uuid.uuidString)
-    }
-    
-    open static func loadLocally(_ uuid: UUID) -> TodoModel? {
-        let userDefaults = UserDefaults.standard
-        if let todoData = userDefaults.object(forKey: uuid.uuidString) {
-            return NSKeyedUnarchiver.unarchiveObject(with: todoData as! Data) as? TodoModel
-        }
-        return nil
-    }
-    
-    open func deleteLocally() {
-        let userDefaults = UserDefaults.standard
-        userDefaults.removeObject(forKey: self.uuid.uuidString)
-    }
+
 }

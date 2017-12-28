@@ -16,16 +16,20 @@ class TodoLocalRepositorySpec: QuickSpec {
         describe("TodoLocalRepository") {
             let todosSaveKey: String = "TodosKey"
             var todos: TodosModel!
+            var todo: TodoModel!
             var repository: TodoLocalRepository!
+            
             beforeEach() {
                 repository = TodoLocalRepository()
                 todos = TodosModel()
                 todos.list.append(TodoModel(content:"Sample content"))
                 todos.list.append(TodoModel(content:"Sample content"))
                 todos.list.append(TodoModel(content:"Sample content"))
+                
+                todo = TodoModel(content:"Sample content")
             }
             
-            context("local storage interactions") {
+            context("todos storage interactions") {
                 it("save/load to/from user defaults") {
                     let expectedUUID = (todos.list.first?.getUUID().uuidString)!
                     repository.saveTodos(todos, key: todosSaveKey)
@@ -49,6 +53,32 @@ class TodoLocalRepositorySpec: QuickSpec {
                     expect(repository.loadTodos(todosSaveKey)).to(beNil())
                     repository.deleteTodos(todosSaveKey)
                     expect(repository.loadTodos(todosSaveKey)).to(beNil())
+                }
+            }
+            
+            context("todo storage interactions") {
+                it("save/load to/from user defaults") {
+                    repository.saveTodo(todo)
+                    let storedTodo = repository.loadTodo(todo.getUUID())
+                    expect(storedTodo!.getUUID().uuidString).to(equal(todo.getUUID().uuidString))
+                }
+                
+                it("retrieves no object safely") {
+                    let storedTodo = repository.loadTodo(UUID())
+                    expect(storedTodo).to(beNil())
+                }
+                
+                it("deletes from user defaults") {
+                    repository.saveTodo(todo)
+                    repository.deleteTodo(todo)
+                    expect(repository.loadTodo(todo.getUUID())).to(beNil())
+                }
+                
+                it("deletes nothing safely") {
+                    let notSavedTodo = TodoModel(content:"Not in userdefaults")
+                    expect(repository.loadTodo(notSavedTodo.getUUID())).to(beNil())
+                    repository.deleteTodo(notSavedTodo)
+                    expect(repository.loadTodo(notSavedTodo.getUUID())).to(beNil())
                 }
             }
         }
