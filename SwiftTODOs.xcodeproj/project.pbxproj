@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		285000021FF42698002945CC /* TodoLocalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285000011FF42698002945CC /* TodoLocalRepository.swift */; };
 		285000041FF42A85002945CC /* TodoLocalRepositorySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285000031FF42A85002945CC /* TodoLocalRepositorySpec.swift */; };
+		285000061FF55CDC002945CC /* TodoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285000051FF55CDC002945CC /* TodoRepository.swift */; };
+		285000081FF55ED7002945CC /* TodoRepositoryFactorySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285000071FF55ED7002945CC /* TodoRepositoryFactorySpec.swift */; };
 		2850FFFA1FF422E0002945CC /* UITextField_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2850FFF91FF422E0002945CC /* UITextField_Extensions.swift */; };
 		28D385381FEAC95600D166F9 /* UIAlertAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D385371FEAC95600D166F9 /* UIAlertAction+Extensions.swift */; };
 		35332A0B8A1E0491DB375C20 /* Pods_SwiftTODOsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BA508C45ADC0115F4D9999E /* Pods_SwiftTODOsTests.framework */; };
@@ -38,6 +40,8 @@
 /* Begin PBXFileReference section */
 		285000011FF42698002945CC /* TodoLocalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoLocalRepository.swift; sourceTree = "<group>"; };
 		285000031FF42A85002945CC /* TodoLocalRepositorySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoLocalRepositorySpec.swift; sourceTree = "<group>"; };
+		285000051FF55CDC002945CC /* TodoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRepository.swift; sourceTree = "<group>"; };
+		285000071FF55ED7002945CC /* TodoRepositoryFactorySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRepositoryFactorySpec.swift; sourceTree = "<group>"; };
 		2850FFF91FF422E0002945CC /* UITextField_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField_Extensions.swift; sourceTree = "<group>"; };
 		28D385371FEAC95600D166F9 /* UIAlertAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Extensions.swift"; sourceTree = "<group>"; };
 		3BA508C45ADC0115F4D9999E /* Pods_SwiftTODOsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftTODOsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				285000011FF42698002945CC /* TodoLocalRepository.swift */,
+				285000051FF55CDC002945CC /* TodoRepository.swift */,
 			);
 			path = repository;
 			sourceTree = "<group>";
@@ -191,6 +196,7 @@
 				9D5940A51C9A20B500A86B2C /* TodoModelSpec.swift */,
 				9D5940AE1C9A430500A86B2C /* TodosModelSpec.swift */,
 				285000031FF42A85002945CC /* TodoLocalRepositorySpec.swift */,
+				285000071FF55ED7002945CC /* TodoRepositoryFactorySpec.swift */,
 			);
 			path = SwiftTODOsTests;
 			sourceTree = "<group>";
@@ -365,6 +371,7 @@
 				285000021FF42698002945CC /* TodoLocalRepository.swift in Sources */,
 				9D917EFB1C8CAA86007D97F1 /* TodoTableViewCell.swift in Sources */,
 				9D917ED91C8B7BA5007D97F1 /* TodosViewController.swift in Sources */,
+				285000061FF55CDC002945CC /* TodoRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +382,7 @@
 				9D5940A61C9A20B500A86B2C /* TodoModelSpec.swift in Sources */,
 				285000041FF42A85002945CC /* TodoLocalRepositorySpec.swift in Sources */,
 				9D5940AF1C9A430500A86B2C /* TodosModelSpec.swift in Sources */,
+				285000081FF55ED7002945CC /* TodoRepositoryFactorySpec.swift in Sources */,
 				9D917EEE1C8B7BA5007D97F1 /* SwiftTODOsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

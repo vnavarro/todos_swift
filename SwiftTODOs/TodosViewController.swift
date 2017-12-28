@@ -23,7 +23,7 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     
     var completedFilter: Bool? = nil
     
-    var todoRepository = TodoLocalRepository()
+    var todoRepository: TodoRepository = TodoRepositoryFactory.createLocalRepository()
     
     override func viewDidLoad() {
         super.viewDidLoad()

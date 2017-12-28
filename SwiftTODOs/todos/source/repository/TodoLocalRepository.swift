@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class TodoLocalRepository {
+open class TodoLocalRepository: TodoRepository {
     
     public init() {}
     
