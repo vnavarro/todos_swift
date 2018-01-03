@@ -12,11 +12,44 @@ class TodosView: UIView {
 
     @IBOutlet weak var txtField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var toolbar: UIToolbar!
     
     var presenter: TodosPresenterContract!
     
     func showEmptyNotAllowed() {
         UIAlertAction.presentInfoAlert(viewController: presenter.viewController(), actionTitle: "Ok", message:"Empty values are not allowed")
+    }
+    
+}
+
+extension TodosView: UIToolbarDelegate {
+    
+    //Mark: UIToolbarDelegate
+    func selectToolbarItem(_ completedFilter: Bool?) {
+        presenter.changeVisibleTodos(completed: completedFilter)
+        tableView.reloadData()
+    }
+    
+    func swapTabItemsColors(_ selectedItem: UIBarButtonItem) {
+        toolbar.items!.forEach({ (item: UIBarButtonItem) -> () in
+            item.tintColor = UIColor(red: 216/255.0, green: 222/255.0, blue: 227/255.0, alpha: 1)
+        })
+        selectedItem.tintColor = UIColor(red: 127/255.0, green: 219/255.0, blue: 118/255.0, alpha: 1)
+    }
+    
+    @IBAction func selectedToDos(_ sender: UIBarButtonItem) {
+        swapTabItemsColors(sender)
+        selectToolbarItem(false)
+    }
+    
+    @IBAction func selectedAll(_ sender: UIBarButtonItem) {
+        swapTabItemsColors(sender)
+        selectToolbarItem(nil)
+    }
+    
+    @IBAction func selectedCompleted(_ sender: UIBarButtonItem) {
+        swapTabItemsColors(sender)
+        selectToolbarItem(true)
     }
     
 }

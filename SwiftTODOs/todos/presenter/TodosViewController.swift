@@ -17,14 +17,27 @@ protocol TodosPresenterContract {
     func markTodoAsCompleted(at: Int)
     func createTodo(title: String)
     func viewController() -> UIViewController
+    func changeVisibleTodos(completed: Bool?)
     
 }
 
 class TodosViewController: UIViewController, TodosPresenterContract {
+    //MARK: Properties
+    var todosData: TodosModel = TodosModel()
+    var allTodos: TodosModel = TodosModel()
     
+    var completedFilter: Bool? = nil
+    
+    var todoRepository: TodoRepository = TodoRepositoryFactory.createLocalRepository()
+    
+    //MARK: IBOutlets
     @IBOutlet weak var todosView: TodosView!
     
-    //Mark: - TodosPresenterContract
+    //MARK: - TodosPresenterContract
+    func changeVisibleTodos(completed: Bool?) {
+        self.completedFilter = completed
+        filterTodos()
+    }
     
     func viewController() -> UIViewController {
         return self
@@ -72,18 +85,12 @@ class TodosViewController: UIViewController, TodosPresenterContract {
         todoRepository.saveTodos(todosData)
     }
     
-    //MARK: Properties
-     
-    @IBOutlet weak var tblViewTodos: UITableView!
-    @IBOutlet weak var toolbar: UIToolbar!
+    //MARK: - Filter
+    func filterTodos() {
+        todosData.list = allTodos.filter(completedFilter);
+    }
     
-    var todosData: TodosModel = TodosModel()
-    var allTodos: TodosModel = TodosModel()
-    
-    var completedFilter: Bool? = nil
-    
-    var todoRepository: TodoRepository = TodoRepositoryFactory.createLocalRepository()
-    
+    //MARK: View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -100,39 +107,6 @@ class TodosViewController: UIViewController, TodosPresenterContract {
 
         allTodos.list = todosData.list
     }
-    
-    //Mark: UIToolbarDelegate
-    func selectToolbarItem(_ completedFilter: Bool?) {
-        self.completedFilter = completedFilter
-        filterTodos()
-        tblViewTodos.reloadData()
-    }
-    
-    func swapTabItemsColors(_ selectedItem: UIBarButtonItem) {
-        self.toolbar.items!.forEach({ (item: UIBarButtonItem) -> () in
-            item.tintColor = UIColor(red: 216/255.0, green: 222/255.0, blue: 227/255.0, alpha: 1)
-        })
-        selectedItem.tintColor = UIColor(red: 127/255.0, green: 219/255.0, blue: 118/255.0, alpha: 1)
-    }
-    
-    @IBAction func selectedToDos(_ sender: UIBarButtonItem) {
-        swapTabItemsColors(sender)
-        selectToolbarItem(false)
-    }
-    
-    @IBAction func selectedAll(_ sender: UIBarButtonItem) {
-        swapTabItemsColors(sender)
-        selectToolbarItem(nil)
-    }
-    
-    @IBAction func selectedCompleted(_ sender: UIBarButtonItem) {
-        swapTabItemsColors(sender)
-        selectToolbarItem(true)
-    }
-    
-    //Mark: Filter todos
-    func filterTodos() {
-        todosData.list = allTodos.filter(completedFilter);
-    }
+
 }
 

@@ -81,19 +81,19 @@
                                     <barButtonItem title="All" id="p1H-21-hEp">
                                         <color key="tintColor" red="0.49803921568627452" green="0.85882352941176465" blue="0.46274509803921571" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <action selector="selectedAll:" destination="9pv-A4-QxB" id="Uje-WK-alR"/>
+                                            <action selector="selectedAll:" destination="tsR-hK-woN" id="j5Z-5U-H77"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem title="To do" id="BeE-ff-EQ7">
                                         <color key="tintColor" red="0.84705882352941175" green="0.87058823529411766" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <action selector="selectedToDos:" destination="9pv-A4-QxB" id="ALS-lU-MY6"/>
+                                            <action selector="selectedToDos:" destination="tsR-hK-woN" id="XD1-8e-UKl"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem title="Completed" id="I9f-Pu-0nd">
                                         <color key="tintColor" red="0.84705882352941175" green="0.87058823529411766" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <action selector="selectedCompleted:" destination="9pv-A4-QxB" id="NAu-t3-x3z"/>
+                                            <action selector="selectedCompleted:" destination="tsR-hK-woN" id="tct-Y0-r3o"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -115,14 +115,13 @@
                         </constraints>
                         <connections>
                             <outlet property="tableView" destination="LIv-O9-ogp" id="Xcy-Fm-Thp"/>
+                            <outlet property="toolbar" destination="dbF-m6-5PA" id="exM-Ax-Gvn"/>
                             <outlet property="txtField" destination="ezU-NI-my1" id="fRC-Xg-IC0"/>
                         </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="All" image="first" id="acW-dT-cKf"/>
                     <connections>
-                        <outlet property="tblViewTodos" destination="LIv-O9-ogp" id="6uN-zg-Zpt"/>
                         <outlet property="todosView" destination="tsR-hK-woN" id="Sdj-97-FMf"/>
-                        <outlet property="toolbar" destination="dbF-m6-5PA" id="PSw-bY-rRa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
