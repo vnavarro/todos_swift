@@ -8,8 +8,56 @@
 
 import UIKit
 
-class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
- 
+protocol TodosPresenterContract {
+    
+    func todosCount() -> Int
+    func sectionsCount() -> Int
+    func todo(at index: Int) -> TodoModel
+    func removeTodo(at index: Int)
+    func markTodoAsCompleted(at: Int)
+    
+}
+
+class TodosViewController: UIViewController, UITextFieldDelegate, TodosPresenterContract {
+    
+    @IBOutlet weak var todosView: TodosView!
+    
+    func todosCount() -> Int {
+        return todosData.list.count
+    }
+    
+    func sectionsCount() -> Int {
+        return 1
+    }
+    
+    func todo(at index: Int) -> TodoModel {
+        return todosData.list[index]
+    }
+    
+    func removeTodo(at index: Int) {
+        let todo = todosData.list[index]
+        var removeIndex = -1
+        for i in 0..<allTodos.list.count {
+            if allTodos.list[i].content == todo.content {
+                removeIndex = i
+                break
+            }
+        }
+        if removeIndex != -1 {
+            allTodos.list.remove(at: removeIndex)
+        }
+        todosData.list.remove(at: index)
+        todoRepository.saveTodos(todosData)
+    }
+    
+    func markTodoAsCompleted(at index: Int) {
+        let todo = todosData.list[index]
+        todo.completed = !todo.completed
+        filterTodos()
+        todoRepository.saveTodos(todosData)
+    }
+    
+    
     //MARK: Properties
     
     @IBOutlet weak var txtFieldTodo: UITextField!    
@@ -25,6 +73,9 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        todosView.presenter = self
+        
         txtFieldTodo.delegate = self
         if let storedTodos = todoRepository.loadTodos() {
             if(storedTodos.count > 0) {
@@ -61,59 +112,6 @@ class TodosViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         }
         tblViewTodos.reloadData()
         textField.text = ""
-        
-        todoRepository.saveTodos(todosData)
-    }
-
-    //Mark: UITableViewDelegate/DataSource
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as! TodoTableViewCell
-        
-        let todo = todosData.list[indexPath.row]
-        cell.titleLabel.text = todo.content
-        cell.switchCheckbox(todo.completed)
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todosData.list.count
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            let todo = todosData.list[indexPath.row]
-            var removeIndex = -1
-            for i in 0..<allTodos.list.count {
-                if allTodos.list[i].content == todo.content {
-                    removeIndex = i
-                    break
-                }
-            }
-            if removeIndex != -1 {
-                allTodos.list.remove(at: removeIndex)
-            }
-            todosData.list.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            
-            todoRepository.saveTodos(todosData)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let todo = todosData.list[indexPath.row]
-        todo.completed = !todo.completed
-        filterTodos()
-        tblViewTodos.reloadData()
         
         todoRepository.saveTodos(todosData)
     }
