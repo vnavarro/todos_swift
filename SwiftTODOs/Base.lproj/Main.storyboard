@@ -113,13 +113,16 @@
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="dbF-m6-5PA" secondAttribute="bottom" id="zKo-8k-FOA"/>
                             <constraint firstItem="LIv-O9-ogp" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="5" id="zOD-F4-55e"/>
                         </constraints>
+                        <connections>
+                            <outlet property="tableView" destination="LIv-O9-ogp" id="Xcy-Fm-Thp"/>
+                            <outlet property="txtField" destination="ezU-NI-my1" id="fRC-Xg-IC0"/>
+                        </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="All" image="first" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="tblViewTodos" destination="LIv-O9-ogp" id="6uN-zg-Zpt"/>
                         <outlet property="todosView" destination="tsR-hK-woN" id="Sdj-97-FMf"/>
                         <outlet property="toolbar" destination="dbF-m6-5PA" id="PSw-bY-rRa"/>
-                        <outlet property="txtFieldTodo" destination="ezU-NI-my1" id="aID-bW-dnM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>

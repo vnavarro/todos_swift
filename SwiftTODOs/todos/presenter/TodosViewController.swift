@@ -15,12 +15,20 @@ protocol TodosPresenterContract {
     func todo(at index: Int) -> TodoModel
     func removeTodo(at index: Int)
     func markTodoAsCompleted(at: Int)
+    func createTodo(title: String)
+    func viewController() -> UIViewController
     
 }
 
-class TodosViewController: UIViewController, UITextFieldDelegate, TodosPresenterContract {
+class TodosViewController: UIViewController, TodosPresenterContract {
     
     @IBOutlet weak var todosView: TodosView!
+    
+    //Mark: - TodosPresenterContract
+    
+    func viewController() -> UIViewController {
+        return self
+    }
     
     func todosCount() -> Int {
         return todosData.list.count
@@ -57,10 +65,15 @@ class TodosViewController: UIViewController, UITextFieldDelegate, TodosPresenter
         todoRepository.saveTodos(todosData)
     }
     
+    func createTodo(title: String) {
+        let newTodo = TodoModel(content: title)
+        todosData.list.append(newTodo)
+        allTodos.list.append(newTodo)
+        todoRepository.saveTodos(todosData)
+    }
     
     //MARK: Properties
-    
-    @IBOutlet weak var txtFieldTodo: UITextField!    
+     
     @IBOutlet weak var tblViewTodos: UITableView!
     @IBOutlet weak var toolbar: UIToolbar!
     
@@ -76,7 +89,6 @@ class TodosViewController: UIViewController, UITextFieldDelegate, TodosPresenter
         
         todosView.presenter = self
         
-        txtFieldTodo.delegate = self
         if let storedTodos = todoRepository.loadTodos() {
             if(storedTodos.count > 0) {
                 todosData.list = storedTodos
@@ -87,33 +99,6 @@ class TodosViewController: UIViewController, UITextFieldDelegate, TodosPresenter
         }
 
         allTodos.list = todosData.list
-    }
-
-    // MARK: UITextFieldDelegate
-    func showEmptyNotAllowed() {
-        UIAlertAction.presentInfoAlert(viewController: self, actionTitle: "Ok", message:"Empty values are not allowed")
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if txtFieldTodo.isEmpty() {
-            showEmptyNotAllowed()
-            return
-        }
-        
-        if let newItem = textField.text {
-            let newTodo = TodoModel(content: newItem)
-            todosData.list.append(newTodo)
-            allTodos.list.append(newTodo)
-        }
-        tblViewTodos.reloadData()
-        textField.text = ""
-        
-        todoRepository.saveTodos(todosData)
     }
     
     //Mark: UIToolbarDelegate

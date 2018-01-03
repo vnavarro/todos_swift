@@ -10,9 +10,37 @@ import UIKit
 
 class TodosView: UIView {
 
+    @IBOutlet weak var txtField: UITextField!
+    @IBOutlet weak var tableView: UITableView!
+    
     var presenter: TodosPresenterContract!
     
+    func showEmptyNotAllowed() {
+        UIAlertAction.presentInfoAlert(viewController: presenter.viewController(), actionTitle: "Ok", message:"Empty values are not allowed")
+    }
+    
+}
 
+extension TodosView: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.isEmpty() {
+            showEmptyNotAllowed()
+            return
+        }
+        
+        if let newItem = textField.text {
+            presenter.createTodo(title: newItem)
+        }
+        tableView.reloadData()
+        textField.text = ""
+    }
+    
 }
 
 extension TodosView:  UITableViewDataSource {
